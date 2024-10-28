@@ -40,8 +40,8 @@ MainWindow::~MainWindow()
     //1156.74
     double pushPunch = 0;
     double stretchPunch = 0;
-    QString key;
-    QString value;
+   // QString key;
+    //QString value;
 
     //718.34
 
@@ -198,7 +198,7 @@ MainWindow::~MainWindow()
 
     QStringList Methodused;
     //categories
-    Methodused.append("practice form");
+    Methodused.append("form w/ bands");
     Methodused.append("isometrics");
     Methodused.append("Knuckle push ups");
     Methodused.append("daily stretching");
@@ -241,8 +241,8 @@ void MainWindow::chartKick(){
     double isoKickVel = 853.5;
     double isoKickHeight = 532.68;
 
-    double stretchKickVel = 557.8;
-    double stretchKickHeight = 250.44;
+    double stretchKickVel = 0; //557.8
+    double stretchKickHeight = 0; //250.44
 
     double legRaisesVel = 0;
     double legraisesHeight = 0;
@@ -254,32 +254,84 @@ void MainWindow::chartKick(){
     double legraiseTotal = legRaisesVel + legraisesHeight;
 
     //kick  variable file loadingKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
- /*   QFile stretchKfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Form");
+    QFile stretchKfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Stretch");
     if (stretchKfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&stretchKfile);
 
-        while (!in.atEnd()) {
-            QString line = in.readLine();
-            QStringList values = line.split("="); // Assuming key=value format
+ QStringList lines;
+    while (!in.atEnd()) {
+        lines.append(in.readLine());
+    }
 
-            if (values.size() == 2) {
-                QString key = values[0].trimmed();
-                QString value = values[1].trimmed();
-
-                qDebug() << "Key:" << key << "Value:" << value;
-                stretchKickVel = value.toDouble();
-                // Use the key and value as needed
-            }
-
+    // Example: Extract data based on a pattern
+    for (const QString &line : lines) {
+        if (line.startsWith("kickVelocity")) {
+            QString velLine = line.split("=").at(1).trimmed();
+            stretchKickVel = velLine.toDouble();
         }
 
+        if (line.startsWith("kickHeight")) {
+            QString heiLine = line.split("=").at(1).trimmed();
+            stretchKickHeight = heiLine.toDouble();
+        }
+    }
         stretchKfile.close();
     } else {
         qDebug() << "Error opening file!";
-    }*/
+    }
+
+    QFile LegRaiseKfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Lift");
+    if (LegRaiseKfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&LegRaiseKfile);
+
+        QStringList lines;
+        while (!in.atEnd()) {
+            lines.append(in.readLine());
+        }
+
+        // Example: Extract data based on a pattern
+        for (const QString &line : lines) {
+            if (line.startsWith("kickVelocity")) {
+                QString velLine = line.split("=").at(1).trimmed();
+                legRaisesVel = velLine.toDouble();
+            }
+
+            if (line.startsWith("kickHeight")) {
+                QString heiLine = line.split("=").at(1).trimmed();
+                legraisesHeight = heiLine.toDouble();
+            }
+        }
+        LegRaiseKfile.close();
+    } else {
+        qDebug() << "Error opening file!";
+    }
 
 
+    QFile KickFormKfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Form");
+    if (KickFormKfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&KickFormKfile);
 
+        QStringList lines;
+        while (!in.atEnd()) {
+            lines.append(in.readLine());
+        }
+
+        // Example: Extract data based on a pattern
+        for (const QString &line : lines) {
+            if (line.startsWith("kickVelocity")) {
+                QString velLine = line.split("=").at(1).trimmed();
+                formKickVel = velLine.toDouble();
+            }
+
+            if (line.startsWith("kickHeight")) {
+                QString heiLine = line.split("=").at(1).trimmed();
+                formkickHeight = heiLine.toDouble();
+            }
+        }
+        KickFormKfile.close();
+    } else {
+        qDebug() << "Error opening file!";
+    }
 
 
 
@@ -332,9 +384,9 @@ void MainWindow::chartKick(){
 
     QStringList Methodused2;
     //categories
-    Methodused2.append("practice form");
+    Methodused2.append("form w/ bands");
     Methodused2.append("isometrics");
-    Methodused2.append("weighted kicks");
+    Methodused2.append("Leg raises");
     Methodused2.append("daily stretching");
 
     //axis
@@ -474,7 +526,7 @@ void MainWindow::chartKick(){
 
 
 
-    }
+    }}
 
     if(file_name.contains("Kick")){
 
@@ -576,7 +628,7 @@ void MainWindow::chartKick(){
 
 
 
-    }}
+    }
 
    // QTextStream in(&file);
 
