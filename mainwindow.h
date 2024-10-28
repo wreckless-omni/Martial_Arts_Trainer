@@ -38,6 +38,8 @@ private slots:
     void chartPunch();
     void chartKick();
 
+    void on_actionDelete_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

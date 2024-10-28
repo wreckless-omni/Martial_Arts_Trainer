@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
- //  ch.punchChart();
    chartPunch();
     chartKick();
 
@@ -36,14 +35,11 @@ MainWindow::~MainWindow()
     //Punch variables-------------------------------------------------------------------------------------------
     static double formPunch = 0;
     double isoPunch = 0;
-
-    //1156.74
     double pushPunch = 0;
     double stretchPunch = 0;
-   // QString key;
-    //QString value;
+    double nothingPunch = 0;
+    double noResPunch = 0;
 
-    //718.34
 
 
     //file loading for charts1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
@@ -60,10 +56,8 @@ MainWindow::~MainWindow()
             QStringList values = line.split("="); // Assuming key=value format
 
             if (values.size() == 2) {
-                QString key = values[0].trimmed();
                 QString value = values[1].trimmed();
 
-                qDebug() << "Key:" << key << "Value:" << value;
                 formPunch = value.toDouble();
                 // Use the key and value as needed
             }
@@ -85,10 +79,8 @@ MainWindow::~MainWindow()
             QStringList values = line.split("="); // Assuming key=value format
 
             if (values.size() == 2) {
-                QString key = values[0].trimmed();
                 QString value = values[1].trimmed();
 
-                qDebug() << "Key:" << key << "Value:" << value;
                 isoPunch = value.toDouble();
                 // Use the key and value as needed
             }
@@ -110,10 +102,8 @@ MainWindow::~MainWindow()
             QStringList values = line.split("="); // Assuming key=value format
 
             if (values.size() == 2) {
-                QString key = values[0].trimmed();
                 QString value = values[1].trimmed();
 
-                qDebug() << "Key:" << key << "Value:" << value;
                 pushPunch = value.toDouble();
                 // Use the key and value as needed
             }
@@ -135,12 +125,9 @@ MainWindow::~MainWindow()
             QStringList values = line.split("="); // Assuming key=value format
 
             if (values.size() == 2) {
-                QString key = values[0].trimmed();
                 QString value = values[1].trimmed();
 
-                qDebug() << "Key:" << key << "Value:" << value;
                 stretchPunch = value.toDouble();
-                // Use the key and value as needed
             }
 
         }
@@ -157,7 +144,7 @@ MainWindow::~MainWindow()
 //recommendation matrix222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
     if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == formPunch )
     {
-        ui->textBrowser-> setText("Slow practice has the most benefit for your punches");
+        ui->textBrowser-> setText("Slow practice with resistance bands has the most benefit for your punches");
 
     }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == isoPunch )
     {
@@ -170,6 +157,16 @@ MainWindow::~MainWindow()
     }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == stretchPunch )
     {
         ui->textBrowser-> setText("Stretching has the most benefit for your punches");
+
+    }
+    else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == nothingPunch )
+    {
+        ui->textBrowser-> setText("Doing nothing has the most benefit for your punches");
+
+    }
+    else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == noResPunch )
+    {
+        ui->textBrowser-> setText("Doing many regular punches has the most benefit for your punches");
 
     }
 
@@ -185,6 +182,8 @@ MainWindow::~MainWindow()
     set1 -> append(isoPunch);
     set1 -> append(pushPunch);
     set1-> append (stretchPunch);
+    set1 -> append (nothingPunch);
+    set1 -> append (noResPunch);
 
 
     series ->append (set1);
@@ -202,6 +201,8 @@ MainWindow::~MainWindow()
     Methodused.append("isometrics");
     Methodused.append("Knuckle push ups");
     Methodused.append("daily stretching");
+    Methodused.append("Doing nothing");
+    Methodused.append("Practice Punches");
 
     //axis
     auto *axisX  = new QBarCategoryAxis();
@@ -223,7 +224,7 @@ MainWindow::~MainWindow()
     QChartView *chartview = new QChartView(chart);
     chartview ->setRenderHint(QPainter::Antialiasing);
     chartview-> setVisible(true);
-    chartview -> setMinimumSize(800,300);
+    chartview -> setMinimumSize(900,300);
     chartview->move (25,0);
 
 
@@ -247,11 +248,13 @@ void MainWindow::chartKick(){
     double legRaisesVel = 0;
     double legraisesHeight = 0;
 
-    //kick totals-------------------------------------------------------------------------------------------------------------
-    double formkickTotal = formKickVel + formkickHeight;
-    double isoKickTotal = isoKickVel + isoKickHeight;
-    double stretchKickTotal = stretchKickVel + stretchKickHeight;
-    double legraiseTotal = legRaisesVel + legraisesHeight;
+    double nothingKickVel = 0;
+    double nothingKickHeight = 0;
+
+    double noResKickVel= 0;
+    double noresKickHeight = 0;
+
+
 
     //kick  variable file loadingKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     QFile stretchKfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Stretch");
@@ -334,21 +337,59 @@ void MainWindow::chartKick(){
     }
 
 
+//kick velocity automagick
 
-
-    if ( std::max( { formkickTotal, isoKickTotal, stretchKickTotal, legraiseTotal } ) == formkickTotal )
+    if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == formKickVel )
     {
-        ui->textBrowser_2-> setText("Slow practice has the most benefit for your kicks");
+        ui->textBrowser_2-> setText("Slow practice with resistance bands has the most benefit for your kick velocity");
 
-    }else  if ( std::max( { formkickTotal, isoKickTotal, stretchKickTotal, legraiseTotal } ) == isoKickTotal )
+    }else   if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == isoKickVel )
     {
-        ui->textBrowser_2-> setText("Isometrics has the most benefit for your kicks");
+        ui->textBrowser_2-> setText("Isometrics has the most benefit for your kick velocity");
 
-    } else if ( std::max( { formkickTotal, isoKickTotal, stretchKickTotal, legraiseTotal } ) == stretchKickTotal )
+    } else  if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == stretchKickVel )
     {
-        ui->textBrowser_2-> setText("Stretching has the most benefit for your kicks");
+        ui->textBrowser_2-> setText("Stretching has the most benefit for your kick velocity");
 
-    } else   ui->textBrowser_2-> setText("Leg raises have the most benefit for your kicks");
+    } else   if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == legRaisesVel)
+
+    ui->textBrowser_2-> setText("Leg raises have the most benefit for your kick velocity");
+
+    else   if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == nothingKickVel)
+
+    ui->textBrowser_2-> setText("doing nothing has the most benefit for your kick velocity");
+
+    else  if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == noResKickVel)
+
+    ui->textBrowser_2-> setText("Practicing many kicks has the most benefit for your kick velocity");
+
+
+   // kick height Automagick
+    //kick velocity automagick
+
+    if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == formkickHeight )
+    {
+        ui->textBrowser_4-> setText("Slow practice with resistance bands has the most benefit for your kick height");
+
+    }else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == isoKickHeight )
+    {
+        ui->textBrowser_4-> setText("Isometrics has the most benefit for your kick height");
+
+    } else if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == stretchKickVel )
+    {
+        ui->textBrowser_4-> setText("Stretching has the most benefit for your kick height");
+
+    } else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == legRaisesVel)
+
+    ui->textBrowser_4-> setText("Leg raises have the most benefit for your kick height");
+
+    else   if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == nothingKickVel)
+
+    ui->textBrowser_4-> setText("doing nothing has the most benefit for your kick height");
+
+    else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == noResKickVel)
+
+    ui->textBrowser_4-> setText("Practicing many kicks has the most benefit for your kick height");
 
 
 
@@ -363,6 +404,8 @@ void MainWindow::chartKick(){
     set2 -> append(isoKickVel);
     set2 -> append(legRaisesVel);
     set2 -> append (stretchKickVel);
+    set2 -> append (nothingKickVel);
+    set2 -> append (noResKickVel);
 
     QBarSet *set3 = new QBarSet ("Sidekick Upward velocity");
 
@@ -370,12 +413,14 @@ void MainWindow::chartKick(){
     set3 -> append(isoKickHeight);
     set3 -> append(legraisesHeight);
     set3 -> append (stretchKickHeight);
+    set3 -> append (nothingKickHeight);
+    set3 -> append (noresKickHeight);
 
     series2 ->append (set2);
     series2 ->append (set3);
 
 
-    //make chart1
+    //make chart2
     auto *chart2 = new QChart();
     chart2-> addSeries (series2);
     chart2 -> setTitle ("Sidekick Progress Against Method Deg/S");
@@ -388,6 +433,8 @@ void MainWindow::chartKick(){
     Methodused2.append("isometrics");
     Methodused2.append("Leg raises");
     Methodused2.append("daily stretching");
+    Methodused2.append("doing nothing");
+    Methodused2.append("practicing Kicks");
 
     //axis
     auto *axisX2  = new QBarCategoryAxis();
@@ -409,7 +456,7 @@ void MainWindow::chartKick(){
     QChartView *chartview2 = new QChartView(chart2);
     chartview2 ->setRenderHint(QPainter::Antialiasing);
     chartview2-> setVisible(true);
-    chartview2 -> setMinimumSize(800,300);
+    chartview2 -> setMinimumSize(900,300);
     chartview2->move (25,300);
 
 
@@ -519,7 +566,7 @@ void MainWindow::chartKick(){
             }
 
 
-
+           // chart() -> update();
         }
 
 
@@ -630,30 +677,26 @@ void MainWindow::chartKick(){
 
     }
 
-   // QTextStream in(&file);
 
 
-   /* if(file_name.contains("punchGuy")){
 
 
-        QString string;
-        double currentMaximum = 0;
 
-        while (!in.atEnd()) {
-            string = in.readLine();
-            currentMaximum = qMax(currentMaximum, string.toDouble());
+
+
+
+    void MainWindow::on_actionDelete_triggered()
+    {
+        QString file_name = QFileDialog:: getOpenFileName(this,"open new file", "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin");
+        //  QMessageBox::information (this,"Loaded", file_name);
+        QFile file (file_name);
+
+        if (!file.open(QIODevice::ReadOnly)){
+            // QMessageBox::information(0,"info", file.errorString());
+            qDebug() << file.errorString();
         }
 
-        ui->textBrowser-> setText(QString::number(currentMaximum));
-    }else*/
-
-
-  //  ui ->textBrowser->setText(in.readAll());
-//}
-
-
-
-
-
-
+        QTextStream in(&file);
+        QString line;
+    }
 

@@ -32,8 +32,12 @@ DISTFILES += \
     Kick_Form \
     Kick_Iso \
     Kick_Lift \
+    Kick_NoRes \
+    Kick_Nothing \
     Kick_Stretch \
     Punch_Form \
     Punch_Iso \
+    Punch_NoRes \
+    Punch_Nothing \
     Punch_Push \
     Punch_Stretch
