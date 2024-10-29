@@ -565,15 +565,48 @@ void MainWindow::chartKick(){
                 }
             }
 
+            if(file_name.contains("Nothing")){
+                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Nothing" );
 
-           // chart() -> update();
+                if (writefile.isOpen()) {
+                    // File is already open, close it
+                    writefile.close();
+                }
+
+                if ( writefile.open(QIODevice::WriteOnly))
+                {
+                    QTextStream stream( &writefile );
+                    stream << "Punchnothing = " <<currentMaximum1 << Qt::endl;
+                    writefile.close();
+                }
+            }
+
+            if(file_name.contains("NoRes")){
+                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_NoRes" );
+
+                if (writefile.isOpen()) {
+                    // File is already open, close it
+                    writefile.close();
+                }
+
+                if ( writefile.open(QIODevice::WriteOnly))
+                {
+                    QTextStream stream( &writefile );
+                    stream << "PunchNoRes = " <<currentMaximum1 << Qt::endl;
+                    writefile.close();
+                }
+            }
+
+
         }
 
+    }
+
+    chartPunch();
 
 
 
-
-    }}
+    }
 
     if(file_name.contains("Kick")){
 
@@ -665,38 +698,72 @@ void MainWindow::chartKick(){
                 }
 
 
+                if(file_name.contains("Nothing")){
+                    QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Nothing" );
+
+                    if (writefile.isOpen()) {
+                        // File is already open, close it
+                        writefile.close();
+                    }
+
+                    if ( writefile.open(QIODevice::WriteOnly))
+                    {
+                        QTextStream stream( &writefile );
+                        stream << "kickVelocity = " <<currentMaximum2 << "\nkickHeight = "<< currentMaximum1 << Qt::endl;
+                        writefile.close();
+                    }
+                }
+
+                if(file_name.contains("NoRes")){
+                    QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_NoRes" );
+
+                    if (writefile.isOpen()) {
+                        // File is already open, close it
+                        writefile.close();
+                    }
+
+                    if ( writefile.open(QIODevice::WriteOnly))
+                    {
+                        QTextStream stream( &writefile );
+                        stream << "kickVelocity = " <<currentMaximum2 << "\nkickHeight = "<< currentMaximum1 << Qt::endl;
+                        writefile.close();
+                    }
+                }
+
+
             }
 
         }
 
-
+        chartKick();
     }
 
 
 
 
     }
-
-
-
-
-
-
 
 
 
     void MainWindow::on_actionDelete_triggered()
     {
         QString file_name = QFileDialog:: getOpenFileName(this,"open new file", "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin");
-        //  QMessageBox::information (this,"Loaded", file_name);
-        QFile file (file_name);
+        QFile nullfile (file_name);
 
-        if (!file.open(QIODevice::ReadOnly)){
-            // QMessageBox::information(0,"info", file.errorString());
-            qDebug() << file.errorString();
+        if (nullfile.isOpen()) {
+            // File is already open, close it
+            nullfile.close();
         }
 
-        QTextStream in(&file);
-        QString line;
+        if ( nullfile.open(QIODevice::WriteOnly))
+        {
+            QTextStream stream( &nullfile );
+            stream << "" << Qt::endl;
+            nullfile.close();
+        }
+
+        chartKick() ;
+        chartPunch();
+
     }
 
