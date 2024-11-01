@@ -16,6 +16,11 @@
 #include <QPrintDialog>
 #include <QDebug>
 #include <QStringList>
+#include <QMediaPlayer>
+#include <QUrl>
+#include <QAudioOutput>
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -33,14 +38,13 @@ public:
 private slots:
     void on_actionLoad_triggered();
 
-
-
     void chartPunch();
     void chartKick();
-
     void on_actionDelete_triggered();
 
 private:
     Ui::MainWindow *ui;
+    QMediaPlayer* mediaPlayer;
+
 };
 #endif // MAINWINDOW_H

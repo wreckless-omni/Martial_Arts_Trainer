@@ -13,13 +13,26 @@ MainWindow::MainWindow(QWidget *parent)
 
    chartMethods ch;
 
+  // mediaPlayer->setSource(QUrl::fromLocalFile("C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn.wav"));
+
+   QMediaPlayer *player = new QMediaPlayer;
+   QAudioOutput *audioOutput = new QAudioOutput;
+   player->setAudioOutput(audioOutput);
+
+   // Specify the WAV file path
+   QString filePath = "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn-001.wav";
+   player->setSource(QUrl::fromLocalFile(filePath));
+
+
 
 
    chartPunch();
     chartKick();
+    // Start playback
+    player->play();
 
 
-    }
+}
 
 MainWindow::~MainWindow()
 {
@@ -144,29 +157,29 @@ MainWindow::~MainWindow()
 //recommendation matrix222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
     if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == formPunch )
     {
-        ui->textBrowser-> setText("Slow practice with resistance bands has the most benefit for your punches");
+        ui->textBrowser-> setText("Slow practice with resistance bands has the most benefit for your punches.\nAngular velocity: " + QString::number(formPunch));
 
     }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == isoPunch )
     {
-        ui->textBrowser-> setText("Isometrics has the most benefit for your punches");
+        ui->textBrowser-> setText("Isometrics has the most benefit for your punches.\nAngular velocity: " + QString::number(isoPunch));
 
     }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == pushPunch )
     {
-        ui->textBrowser-> setText("Knuckle push ups have the most benefit for your punches");
+        ui->textBrowser-> setText("Knuckle push ups have the most benefit for your punches.\nAngular velocity: " + QString::number(pushPunch));
 
     }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == stretchPunch )
     {
-        ui->textBrowser-> setText("Stretching has the most benefit for your punches");
+        ui->textBrowser-> setText("Stretching has the most benefit for your punches.\nAngular velocity: " + QString::number(stretchPunch));
 
     }
     else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == nothingPunch )
     {
-        ui->textBrowser-> setText("Doing nothing has the most benefit for your punches");
+        ui->textBrowser-> setText("Doing nothing has the most benefit for your punches.\nAngular velocity: " + QString::number(nothingPunch));
 
     }
     else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == noResPunch )
     {
-        ui->textBrowser-> setText("Doing many regular punches has the most benefit for your punches");
+        ui->textBrowser-> setText("Doing many regular punches has the most benefit for your punches\nAngular velocity: " + QString::number(noResPunch));
 
     }
 
@@ -187,12 +200,16 @@ MainWindow::~MainWindow()
 
 
     series ->append (set1);
+    set1->setBrush(QColor(Qt::red));
 
     //make chart1
     auto *chart = new QChart();
     chart -> addSeries (series);
     chart -> setTitle ("Straight Punch velocity deg/second");
     chart -> setAnimationOptions(QChart::SeriesAnimations);
+    chart ->setAnimationDuration(8000);
+    chart->setBackgroundBrush(QBrush(QColor("lightgray")));
+    //chart -> setFont()
 
 
     QStringList Methodused;
@@ -341,55 +358,55 @@ void MainWindow::chartKick(){
 
     if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == formKickVel )
     {
-        ui->textBrowser_2-> setText("Slow practice with resistance bands has the most benefit for your kick velocity");
+        ui->textBrowser_2-> setText("Slow practice with resistance bands has the most benefit for your kick velocity.\nAngular velocity: " + QString::number(formKickVel));
 
     }else   if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == isoKickVel )
     {
-        ui->textBrowser_2-> setText("Isometrics has the most benefit for your kick velocity");
+        ui->textBrowser_2-> setText("Isometrics has the most benefit for your kick velocity.\nAngular velocity: " + QString::number(isoKickVel));
 
     } else  if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == stretchKickVel )
     {
-        ui->textBrowser_2-> setText("Stretching has the most benefit for your kick velocity");
+        ui->textBrowser_2-> setText("Stretching has the most benefit for your kick velocity.\nAngular velocity: " + QString::number(stretchKickVel));
 
     } else   if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == legRaisesVel)
 
-    ui->textBrowser_2-> setText("Leg raises have the most benefit for your kick velocity");
+    ui->textBrowser_2-> setText("Leg raises have the most benefit for your kick velocity.\nAngular velocity: " + QString::number(legRaisesVel));
 
     else   if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == nothingKickVel)
 
-    ui->textBrowser_2-> setText("doing nothing has the most benefit for your kick velocity");
+    ui->textBrowser_2-> setText("doing nothing has the most benefit for your kick velocity.\nAngular velocity: " + QString::number(nothingKickVel));
 
     else  if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == noResKickVel)
 
-    ui->textBrowser_2-> setText("Practicing many kicks has the most benefit for your kick velocity");
+    ui->textBrowser_2-> setText("Practicing many kicks has the most benefit for your kick velocity.\nAngular velocity: " + QString::number(noResKickVel));
 
 
    // kick height Automagick
-    //kick velocity automagick
+
 
     if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == formkickHeight )
     {
-        ui->textBrowser_4-> setText("Slow practice with resistance bands has the most benefit for your kick height");
+        ui->textBrowser_4-> setText("Slow practice with resistance bands has the most benefit for your kick height.\nAngular velocity: " + QString::number(formkickHeight));
 
     }else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == isoKickHeight )
     {
-        ui->textBrowser_4-> setText("Isometrics has the most benefit for your kick height");
+        ui->textBrowser_4-> setText("Isometrics has the most benefit for your kick height.\nAngular velocity: " + QString::number(isoKickHeight));
 
-    } else if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == stretchKickVel )
+    } else if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == stretchKickHeight )
     {
-        ui->textBrowser_4-> setText("Stretching has the most benefit for your kick height");
+        ui->textBrowser_4-> setText("Stretching has the most benefit for your kick height.\nAngular velocity: " + QString::number(stretchKickHeight));
 
-    } else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == legRaisesVel)
+    } else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == legraisesHeight)
 
-    ui->textBrowser_4-> setText("Leg raises have the most benefit for your kick height");
+    ui->textBrowser_4-> setText("Leg raises have the most benefit for your kick height.\nAngular velocity: " + QString::number(legraisesHeight));
 
-    else   if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == nothingKickVel)
+    else   if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == nothingKickHeight)
 
-    ui->textBrowser_4-> setText("doing nothing has the most benefit for your kick height");
+    ui->textBrowser_4-> setText("doing nothing has the most benefit for your kick height.\nAngular velocity: " + QString::number(nothingKickHeight));
 
     else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == noResKickVel)
 
-    ui->textBrowser_4-> setText("Practicing many kicks has the most benefit for your kick height");
+    ui->textBrowser_4-> setText("Practicing many kicks has the most benefit for your kick height.\nAngular velocity: " + QString::number(noresKickHeight));
 
 
 
@@ -418,13 +435,17 @@ void MainWindow::chartKick(){
 
     series2 ->append (set2);
     series2 ->append (set3);
-
+    set2->setBrush(QColor(Qt::red));
+    set3->setBrush(QColor(Qt::black));
 
     //make chart2
     auto *chart2 = new QChart();
     chart2-> addSeries (series2);
     chart2 -> setTitle ("Sidekick Progress Against Method Deg/S");
     chart2 -> setAnimationOptions(QChart::SeriesAnimations);
+    chart2 ->setAnimationDuration(8000);
+    chart2->setBackgroundBrush(QBrush(QColor("lightgray")));
+
 
 
     QStringList Methodused2;
@@ -497,7 +518,7 @@ void MainWindow::chartKick(){
 
             currentMaximum1 = qMax(currentMaximum1, thirdString.toDouble());
 
-            ui->textBrowser_3-> setText(QString::number(currentMaximum1));
+          //  ui->textBrowser_3-> setText("Precise punch velocity: " + QString::number(currentMaximum1));
 
 
             if(file_name.contains("Form")){
@@ -604,6 +625,16 @@ void MainWindow::chartKick(){
 
     chartPunch();
 
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput *audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+
+    // Specify the WAV file path
+    QString filePath = "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn-002.wav";
+    player->setSource(QUrl::fromLocalFile(filePath));
+    player->play();
+
+
 
 
     }
@@ -624,7 +655,7 @@ void MainWindow::chartKick(){
                 currentMaximum2 = qMax(currentMaximum2, fourthString.toDouble());
 
 //reversed because of sensor position relative to the leg
-                ui->textBrowser_3-> setText(QString::number(currentMaximum2) + ", " + QString::number(currentMaximum1));
+            //    ui->textBrowser_3-> setText("Precise kick velocity: "+QString::number(currentMaximum2) + "\n Precise kick height: " + QString::number(currentMaximum1));
 
 
                 //automagic file updates
@@ -736,6 +767,14 @@ void MainWindow::chartKick(){
         }
 
         chartKick();
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput *audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+
+        // Specify the WAV file path
+        QString filePath = "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn-004.wav";
+        player->setSource(QUrl::fromLocalFile(filePath));
+        player->play();
     }
 
 
@@ -764,6 +803,14 @@ void MainWindow::chartKick(){
 
         chartKick() ;
         chartPunch();
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput *audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+
+        // Specify the WAV file path
+        QString filePath = "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn-003.wav";
+        player->setSource(QUrl::fromLocalFile(filePath));
+        player->play();
 
     }
 

@@ -1,7 +1,7 @@
-QT       += core gui charts printsupport
+QT       += core gui charts printsupport multimedia
 
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia
 
 CONFIG += c++17
 
@@ -29,6 +29,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    ../../Desktop/guitar rythmn.wav \
     Kick_Form \
     Kick_Iso \
     Kick_Lift \
