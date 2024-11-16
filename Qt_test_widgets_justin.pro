@@ -42,3 +42,8 @@ DISTFILES += \
     Punch_Nothing \
     Punch_Push \
     Punch_Stretch
+
+RESOURCES += \
+    resources.qrc
+
+

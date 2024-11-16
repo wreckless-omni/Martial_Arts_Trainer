@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "fileMethods.h"
-#include "chartmethods.h"
+//#include "fileMethods.h"
 
 
 
@@ -11,25 +10,21 @@ MainWindow::MainWindow(QWidget *parent)
 {
    ui->setupUi(this);
 
-   chartMethods ch;
 
-  // mediaPlayer->setSource(QUrl::fromLocalFile("C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn.wav"));
 
-   QMediaPlayer *player = new QMediaPlayer;
-   QAudioOutput *audioOutput = new QAudioOutput;
-   player->setAudioOutput(audioOutput);
 
-   // Specify the WAV file path
-   QString filePath = "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn-001.wav";
-   player->setSource(QUrl::fromLocalFile(filePath));
+
+   QSoundEffect *sound = new QSoundEffect;
+
+   sound->setSource(QUrl::fromLocalFile(":/resources/guitar rythmn-001.wav"));
+
+   sound->play();
 
 
 
 
    chartPunch();
     chartKick();
-    // Start playback
-    player->play();
 
 
 }
@@ -43,7 +38,8 @@ MainWindow::~MainWindow()
 
 
     void MainWindow::chartPunch(){
-    fileMethods m;
+   // fileMethods m;
+    QString exeDir = QCoreApplication::applicationDirPath();
 
     //Punch variables-------------------------------------------------------------------------------------------
     static double formPunch = 0;
@@ -59,20 +55,20 @@ MainWindow::~MainWindow()
 
 
     //punchesPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
-    QFile formPfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Form");
+    QFile formPfile( exeDir + "/Punch_Form");
 
     if (formPfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&formPfile);
 
         while (!in.atEnd()) {
             QString line = in.readLine();
-            QStringList values = line.split("="); // Assuming key=value format
+            QStringList values = line.split("=");
 
             if (values.size() == 2) {
                 QString value = values[1].trimmed();
 
                 formPunch = value.toDouble();
-                // Use the key and value as needed
+
             }
 
         }
@@ -82,20 +78,20 @@ MainWindow::~MainWindow()
         qDebug() << "Error opening file!";
     }
 
-    QFile isofile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Iso");
+    QFile isofile(exeDir + "/Punch_Iso");
 
     if (isofile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&isofile);
 
         while (!in.atEnd()) {
             QString line = in.readLine();
-            QStringList values = line.split("="); // Assuming key=value format
+            QStringList values = line.split("=");
 
             if (values.size() == 2) {
                 QString value = values[1].trimmed();
 
                 isoPunch = value.toDouble();
-                // Use the key and value as needed
+
             }
 
         }
@@ -105,20 +101,20 @@ MainWindow::~MainWindow()
         qDebug() << "Error opening file!";
     }
 
-    QFile pushPfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Push");
+    QFile pushPfile(exeDir + "/Punch_Push");
 
     if (pushPfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&pushPfile);
 
         while (!in.atEnd()) {
             QString line = in.readLine();
-            QStringList values = line.split("="); // Assuming key=value format
+            QStringList values = line.split("=");
 
             if (values.size() == 2) {
                 QString value = values[1].trimmed();
 
                 pushPunch = value.toDouble();
-                // Use the key and value as needed
+
             }
 
         }
@@ -128,14 +124,14 @@ MainWindow::~MainWindow()
         qDebug() << "Error opening file!";
     }
 
-    QFile stretchPfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Stretch");
+    QFile stretchPfile(exeDir + "/Punch_Stretch");
 
     if (stretchPfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&stretchPfile);
 
         while (!in.atEnd()) {
             QString line = in.readLine();
-            QStringList values = line.split("="); // Assuming key=value format
+            QStringList values = line.split("=");
 
             if (values.size() == 2) {
                 QString value = values[1].trimmed();
@@ -150,51 +146,90 @@ MainWindow::~MainWindow()
         qDebug() << "Error opening file!";
     }
 
+    QFile nothingPfile(exeDir + "/Punch_Nothing");
 
+    if (nothingPfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&nothingPfile);
 
+        while (!in.atEnd()) {
+            QString line = in.readLine();
+            QStringList values = line.split("=");
 
+            if (values.size() == 2) {
+                QString value = values[1].trimmed();
+
+                nothingPunch = value.toDouble();
+            }
+
+        }
+
+        nothingPfile.close();
+    } else {
+        qDebug() << "Error opening file!";
+    }
+
+    QFile noresPfile(exeDir + "/Punch_NoRes");
+
+    if (noresPfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&noresPfile);
+
+        while (!in.atEnd()) {
+            QString line = in.readLine();
+            QStringList values = line.split("=");
+
+            if (values.size() == 2) {
+                QString value = values[1].trimmed();
+
+                noResPunch = value.toDouble();
+            }
+
+        }
+
+        noresPfile.close();
+    } else {
+        qDebug() << "Error opening file!";
+    }
 
 //recommendation matrix222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
-    if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == formPunch )
+    if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch, nothingPunch, noResPunch } ) == formPunch )
     {
-        ui->textBrowser-> setText("Slow practice with resistance bands has the most benefit for your punches.\nAngular velocity: " + QString::number(formPunch));
+        ui->textBrowser-> setText("Slow form practice with resistance bands has the most benefit for your punches.\nAngular velocity: " + QString::number(formPunch));
 
-    }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == isoPunch )
+    }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch, nothingPunch, noResPunch  } ) == isoPunch )
     {
         ui->textBrowser-> setText("Isometrics has the most benefit for your punches.\nAngular velocity: " + QString::number(isoPunch));
 
-    }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == pushPunch )
+    }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch, nothingPunch, noResPunch  } ) == pushPunch )
     {
         ui->textBrowser-> setText("Knuckle push ups have the most benefit for your punches.\nAngular velocity: " + QString::number(pushPunch));
 
-    }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == stretchPunch )
+    }else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch, nothingPunch, noResPunch  } ) == stretchPunch )
     {
         ui->textBrowser-> setText("Stretching has the most benefit for your punches.\nAngular velocity: " + QString::number(stretchPunch));
 
     }
-    else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == nothingPunch )
+    else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch, nothingPunch, noResPunch  } ) == nothingPunch )
     {
         ui->textBrowser-> setText("Doing nothing has the most benefit for your punches.\nAngular velocity: " + QString::number(nothingPunch));
 
     }
-    else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch } ) == noResPunch )
+    else  if ( std::max( { formPunch, isoPunch, stretchPunch, pushPunch, nothingPunch, noResPunch  } ) == noResPunch )
     {
         ui->textBrowser-> setText("Doing many regular punches has the most benefit for your punches\nAngular velocity: " + QString::number(noResPunch));
 
     }
 
 
-    //stretchPunch = m.setFormPunch();
-    //punch----------------------------------------------------------------------------------------------------------------
+    //punch Chart----------------------------------------------------------------------------------------------------------------
 
     QBarSeries *series = new QBarSeries();
     //data set
     QBarSet *set1 = new QBarSet ("Straight Punch Forward Velocity");
 
-    set1 -> append(formPunch);
-    set1 -> append(isoPunch);
+    set1 -> append(stretchPunch);
     set1 -> append(pushPunch);
-    set1-> append (stretchPunch);
+    set1 -> append(isoPunch);
+    set1-> append (formPunch);
     set1 -> append (nothingPunch);
     set1 -> append (noResPunch);
 
@@ -207,18 +242,20 @@ MainWindow::~MainWindow()
     chart -> addSeries (series);
     chart -> setTitle ("Straight Punch velocity deg/second");
     chart -> setAnimationOptions(QChart::SeriesAnimations);
-    chart ->setAnimationDuration(8000);
+    chart ->setAnimationDuration(10000);
     chart->setBackgroundBrush(QBrush(QColor("lightgray")));
     //chart -> setFont()
 
 
+
+
     QStringList Methodused;
     //categories
-    Methodused.append("form w/ bands");
-    Methodused.append("isometrics");
-    Methodused.append("Knuckle push ups");
-    Methodused.append("daily stretching");
-    Methodused.append("Doing nothing");
+    Methodused.append("Daily Stretching");
+    Methodused.append("Knuckle Push Ups");
+    Methodused.append("Isometrics");
+    Methodused.append("Form W/ Bands");
+    Methodused.append("Doing Nothing");
     Methodused.append("Practice Punches");
 
     //axis
@@ -228,7 +265,7 @@ MainWindow::~MainWindow()
     series -> attachAxis(axisX);
 
     auto *axisY = new QValueAxis();
-    axisY -> setRange(0,1500);
+    axisY -> setRange(0,1800);
     chart-> addAxis(axisY, Qt::AlignLeft);
     series -> attachAxis(axisY);
 
@@ -251,16 +288,16 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::chartKick(){
-
+ QString exeDir = QCoreApplication::applicationDirPath();
     //kick varibles----------------------------------------------------------------------------------------------------
     double formKickVel = 0;
     double formkickHeight = 0;
 
-    double isoKickVel = 853.5;
-    double isoKickHeight = 532.68;
+    double isoKickVel = 0;
+    double isoKickHeight = 0;
 
-    double stretchKickVel = 0; //557.8
-    double stretchKickHeight = 0; //250.44
+    double stretchKickVel = 0;
+    double stretchKickHeight = 0;
 
     double legRaisesVel = 0;
     double legraisesHeight = 0;
@@ -274,7 +311,7 @@ void MainWindow::chartKick(){
 
 
     //kick  variable file loadingKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-    QFile stretchKfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Stretch");
+    QFile stretchKfile(exeDir + "/Kick_Stretch");
     if (stretchKfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&stretchKfile);
 
@@ -283,7 +320,6 @@ void MainWindow::chartKick(){
         lines.append(in.readLine());
     }
 
-    // Example: Extract data based on a pattern
     for (const QString &line : lines) {
         if (line.startsWith("kickVelocity")) {
             QString velLine = line.split("=").at(1).trimmed();
@@ -300,7 +336,7 @@ void MainWindow::chartKick(){
         qDebug() << "Error opening file!";
     }
 
-    QFile LegRaiseKfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Lift");
+    QFile LegRaiseKfile(exeDir + "/Kick_Lift");
     if (LegRaiseKfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&LegRaiseKfile);
 
@@ -309,7 +345,6 @@ void MainWindow::chartKick(){
             lines.append(in.readLine());
         }
 
-        // Example: Extract data based on a pattern
         for (const QString &line : lines) {
             if (line.startsWith("kickVelocity")) {
                 QString velLine = line.split("=").at(1).trimmed();
@@ -327,7 +362,7 @@ void MainWindow::chartKick(){
     }
 
 
-    QFile KickFormKfile("C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Form");
+    QFile KickFormKfile(exeDir + "/Kick_Form");
     if (KickFormKfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&KickFormKfile);
 
@@ -353,12 +388,86 @@ void MainWindow::chartKick(){
         qDebug() << "Error opening file!";
     }
 
+    QFile KickIsofile(exeDir + "/Kick_Iso");
+    if (KickIsofile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&KickIsofile);
+
+        QStringList lines;
+        while (!in.atEnd()) {
+            lines.append(in.readLine());
+        }
+
+        for (const QString &line : lines) {
+            if (line.startsWith("kickVelocity")) {
+                QString velLine = line.split("=").at(1).trimmed();
+                isoKickVel = velLine.toDouble();
+            }
+
+            if (line.startsWith("kickHeight")) {
+                QString heiLine = line.split("=").at(1).trimmed();
+                isoKickHeight = heiLine.toDouble();
+            }
+        }
+        KickIsofile.close();
+    } else {
+        qDebug() << "Error opening file!";
+    }
+
+    QFile KickNothingfile(exeDir + "/Kick_Nothing");
+    if (KickNothingfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&KickNothingfile);
+
+        QStringList lines;
+        while (!in.atEnd()) {
+            lines.append(in.readLine());
+        }
+
+        for (const QString &line : lines) {
+            if (line.startsWith("kickVelocity")) {
+                QString velLine = line.split("=").at(1).trimmed();
+                nothingKickVel = velLine.toDouble();
+            }
+
+            if (line.startsWith("kickHeight")) {
+                QString heiLine = line.split("=").at(1).trimmed();
+                nothingKickHeight = heiLine.toDouble();
+            }
+        }
+        KickNothingfile.close();
+    } else {
+        qDebug() << "Error opening file!";
+    }
+
+    QFile KickNoResfile(exeDir + "/Kick_NoRes");
+    if (KickNoResfile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&KickNoResfile);
+
+        QStringList lines;
+        while (!in.atEnd()) {
+            lines.append(in.readLine());
+        }
+
+        for (const QString &line : lines) {
+            if (line.startsWith("kickVelocity")) {
+                QString velLine = line.split("=").at(1).trimmed();
+                noResKickVel = velLine.toDouble();
+            }
+
+            if (line.startsWith("kickHeight")) {
+                QString heiLine = line.split("=").at(1).trimmed();
+                noresKickHeight = heiLine.toDouble();
+            }
+        }
+        KickNoResfile.close();
+    } else {
+        qDebug() << "Error opening file!";
+    }
 
 //kick velocity automagick
 
     if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == formKickVel )
     {
-        ui->textBrowser_2-> setText("Slow practice with resistance bands has the most benefit for your kick velocity.\nAngular velocity: " + QString::number(formKickVel));
+        ui->textBrowser_2-> setText("Slow form practice with resistance bands has the most benefit for your kick velocity.\nAngular velocity: " + QString::number(formKickVel));
 
     }else   if ( std::max( { formKickVel, isoKickVel, stretchKickVel, legRaisesVel, nothingKickVel, noResKickVel } ) == isoKickVel )
     {
@@ -386,7 +495,7 @@ void MainWindow::chartKick(){
 
     if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == formkickHeight )
     {
-        ui->textBrowser_4-> setText("Slow practice with resistance bands has the most benefit for your kick height.\nAngular velocity: " + QString::number(formkickHeight));
+        ui->textBrowser_4-> setText("Slow form practice with resistance bands has the most benefit for your kick height.\nAngular velocity: " + QString::number(formkickHeight));
 
     }else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == isoKickHeight )
     {
@@ -404,10 +513,9 @@ void MainWindow::chartKick(){
 
     ui->textBrowser_4-> setText("doing nothing has the most benefit for your kick height.\nAngular velocity: " + QString::number(nothingKickHeight));
 
-    else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == noResKickVel)
+    else  if ( std::max( { formkickHeight, isoKickHeight, stretchKickHeight, legraisesHeight, nothingKickHeight, noresKickHeight } ) == noresKickHeight)
 
     ui->textBrowser_4-> setText("Practicing many kicks has the most benefit for your kick height.\nAngular velocity: " + QString::number(noresKickHeight));
-
 
 
 
@@ -417,19 +525,19 @@ void MainWindow::chartKick(){
     //data set
     QBarSet *set2 = new QBarSet ("Sidekick outer Velocity");
 
-    set2 -> append(formKickVel);
-    set2 -> append(isoKickVel);
+    set2 -> append(stretchKickVel);
     set2 -> append(legRaisesVel);
-    set2 -> append (stretchKickVel);
+    set2 -> append(isoKickVel);
+    set2 -> append (formKickVel);
     set2 -> append (nothingKickVel);
     set2 -> append (noResKickVel);
 
     QBarSet *set3 = new QBarSet ("Sidekick Upward velocity");
 
-    set3 -> append(formkickHeight);
-    set3 -> append(isoKickHeight);
+    set3 -> append(stretchKickHeight);
     set3 -> append(legraisesHeight);
-    set3 -> append (stretchKickHeight);
+    set3 -> append(isoKickHeight);
+    set3 -> append (formkickHeight);
     set3 -> append (nothingKickHeight);
     set3 -> append (noresKickHeight);
 
@@ -443,19 +551,19 @@ void MainWindow::chartKick(){
     chart2-> addSeries (series2);
     chart2 -> setTitle ("Sidekick Progress Against Method Deg/S");
     chart2 -> setAnimationOptions(QChart::SeriesAnimations);
-    chart2 ->setAnimationDuration(8000);
+    chart2 ->setAnimationDuration(10000);
     chart2->setBackgroundBrush(QBrush(QColor("lightgray")));
 
 
 
     QStringList Methodused2;
     //categories
-    Methodused2.append("form w/ bands");
-    Methodused2.append("isometrics");
-    Methodused2.append("Leg raises");
-    Methodused2.append("daily stretching");
-    Methodused2.append("doing nothing");
-    Methodused2.append("practicing Kicks");
+    Methodused2.append("Daily Stretching");
+    Methodused2.append("Leg Raises");
+    Methodused2.append("Isometrics");
+    Methodused2.append("Form W/ Bands");
+    Methodused2.append("Doing Nothing");
+    Methodused2.append("Practicing Kicks");
 
     //axis
     auto *axisX2  = new QBarCategoryAxis();
@@ -464,7 +572,7 @@ void MainWindow::chartKick(){
     series2 -> attachAxis(axisX2);
 
     auto *axisY2 = new QValueAxis();
-    axisY2 -> setRange(0,1500);
+    axisY2 -> setRange(0,1100);
     chart2-> addAxis(axisY2, Qt::AlignLeft);
     series2 -> attachAxis(axisY2);
 
@@ -491,8 +599,9 @@ void MainWindow::chartKick(){
  void MainWindow::on_actionLoad_triggered()
 {
 
+    QString exeDir = QCoreApplication::applicationDirPath();
+
     QString file_name = QFileDialog:: getOpenFileName(this,"open new file", "C:\\Users\\Justin\\Desktop\\punch_kick data");
-  //  QMessageBox::information (this,"Loaded", file_name);
     QFile file (file_name);
 
     if (!file.open(QIODevice::ReadOnly)){
@@ -509,20 +618,19 @@ void MainWindow::chartKick(){
     if(file_name.contains("Punch")){
     while (!in.atEnd()) {
         line = in.readLine();
-        QStringList words = line.split(","); // Split line into words
+        QStringList words = line.split(",");
 
-        if (words.size() >= 3) { // Check if there are at least 3 words
-            QString thirdString = words[2]; // Get the third word (index 2)
+        if (words.size() >= 3) {
+            QString thirdString = words[2];
 
-           // if (!line.contains("-"))
+
 
             currentMaximum1 = qMax(currentMaximum1, thirdString.toDouble());
 
-          //  ui->textBrowser_3-> setText("Precise punch velocity: " + QString::number(currentMaximum1));
 
 
             if(file_name.contains("Form")){
-                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Form" );
+                QFile writefile( exeDir + "/Punch_Form" );
 
                 if (writefile.isOpen()) {
                     // File is already open, close it
@@ -539,7 +647,7 @@ void MainWindow::chartKick(){
 
 
             if(file_name.contains("Iso")){
-                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Iso" );
+                QFile writefile( exeDir + "/Punch_Iso" );
 
                 if (writefile.isOpen()) {
                     // File is already open, close it
@@ -555,7 +663,7 @@ void MainWindow::chartKick(){
             }
 
             if(file_name.contains("Push")){
-                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Push" );
+                QFile writefile( exeDir + "/Punch_Push" );
 
                 if (writefile.isOpen()) {
                     // File is already open, close it
@@ -571,7 +679,7 @@ void MainWindow::chartKick(){
             }
 
             if(file_name.contains("Stretch")){
-                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Stretch" );
+                QFile writefile( exeDir + "/Punch_Stretch" );
 
                 if (writefile.isOpen()) {
                     // File is already open, close it
@@ -587,7 +695,7 @@ void MainWindow::chartKick(){
             }
 
             if(file_name.contains("Nothing")){
-                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_Nothing" );
+                QFile writefile( exeDir + "/Punch_Nothing" );
 
                 if (writefile.isOpen()) {
                     // File is already open, close it
@@ -603,7 +711,7 @@ void MainWindow::chartKick(){
             }
 
             if(file_name.contains("NoRes")){
-                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Punch_NoRes" );
+                QFile writefile( exeDir + "/Punch_NoRes" );
 
                 if (writefile.isOpen()) {
                     // File is already open, close it
@@ -625,14 +733,13 @@ void MainWindow::chartKick(){
 
     chartPunch();
 
-    QMediaPlayer *player = new QMediaPlayer;
-    QAudioOutput *audioOutput = new QAudioOutput;
-    player->setAudioOutput(audioOutput);
 
-    // Specify the WAV file path
-    QString filePath = "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn-002.wav";
-    player->setSource(QUrl::fromLocalFile(filePath));
-    player->play();
+
+    QSoundEffect *sound = new QSoundEffect;
+
+    sound->setSource(QUrl::fromLocalFile(":/resources/guitar rythmn-002.wav"));
+
+    sound->play();
 
 
 
@@ -655,13 +762,12 @@ void MainWindow::chartKick(){
                 currentMaximum2 = qMax(currentMaximum2, fourthString.toDouble());
 
 //reversed because of sensor position relative to the leg
-            //    ui->textBrowser_3-> setText("Precise kick velocity: "+QString::number(currentMaximum2) + "\n Precise kick height: " + QString::number(currentMaximum1));
 
 
-                //automagic file updates
+                //automagick file updates
 
                 if(file_name.contains("Form")){
-                QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Form" );
+                QFile writefile( exeDir + "/Kick_Form" );
 
                 if (writefile.isOpen()) {
                     // File is already open, close it
@@ -678,7 +784,7 @@ void MainWindow::chartKick(){
 
 
                 if(file_name.contains("Iso")){
-                    QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Iso" );
+                    QFile writefile( exeDir + "/Kick_Iso" );
 
                     if (writefile.isOpen()) {
                         // File is already open, close it
@@ -694,7 +800,7 @@ void MainWindow::chartKick(){
                 }
 
                 if(file_name.contains("Lift")){
-                    QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Lift" );
+                    QFile writefile( exeDir + "/Kick_Lift" );
 
                     if (writefile.isOpen()) {
                         // File is already open, close it
@@ -713,7 +819,7 @@ void MainWindow::chartKick(){
 
 
                 if(file_name.contains("Stretch")){
-                    QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Stretch" );
+                    QFile writefile( exeDir + "/Kick_Stretch" );
 
                     if (writefile.isOpen()) {
                         // File is already open, close it
@@ -730,7 +836,7 @@ void MainWindow::chartKick(){
 
 
                 if(file_name.contains("Nothing")){
-                    QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_Nothing" );
+                    QFile writefile( exeDir + "/Kick_Nothing" );
 
                     if (writefile.isOpen()) {
                         // File is already open, close it
@@ -746,7 +852,7 @@ void MainWindow::chartKick(){
                 }
 
                 if(file_name.contains("NoRes")){
-                    QFile writefile( "C:/Users/Justin/Documents/Qt_test_widgets_justin/Kick_NoRes" );
+                    QFile writefile( exeDir + "/Kick_NoRes" );
 
                     if (writefile.isOpen()) {
                         // File is already open, close it
@@ -771,10 +877,11 @@ void MainWindow::chartKick(){
         QAudioOutput *audioOutput = new QAudioOutput;
         player->setAudioOutput(audioOutput);
 
-        // Specify the WAV file path
-        QString filePath = "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn-004.wav";
-        player->setSource(QUrl::fromLocalFile(filePath));
-        player->play();
+        QSoundEffect *sound = new QSoundEffect;
+
+        sound->setSource(QUrl::fromLocalFile(":/resources/guitar rythmn-004.wav"));
+
+        sound->play();
     }
 
 
@@ -786,7 +893,9 @@ void MainWindow::chartKick(){
 
     void MainWindow::on_actionDelete_triggered()
     {
-        QString file_name = QFileDialog:: getOpenFileName(this,"open new file", "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin");
+        QString exeDir = QCoreApplication::applicationDirPath();
+
+        QString file_name = QFileDialog:: getOpenFileName(this,"open new file", exeDir);
         QFile nullfile (file_name);
 
         if (nullfile.isOpen()) {
@@ -801,16 +910,18 @@ void MainWindow::chartKick(){
             nullfile.close();
         }
 
-        chartKick() ;
+       chartKick() ;
         chartPunch();
+
         QMediaPlayer *player = new QMediaPlayer;
         QAudioOutput *audioOutput = new QAudioOutput;
         player->setAudioOutput(audioOutput);
 
-        // Specify the WAV file path
-        QString filePath = "C:\\Users\\Justin\\Documents\\Qt_test_widgets_justin\\guitar rythmn-003.wav";
-        player->setSource(QUrl::fromLocalFile(filePath));
-        player->play();
+        QSoundEffect *sound = new QSoundEffect;
+
+        sound->setSource(QUrl::fromLocalFile(":/resources/guitar rythmn-003.wav"));
+
+        sound->play();
 
     }
 

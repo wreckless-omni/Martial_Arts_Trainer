@@ -51,16 +51,24 @@ public:
         palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
         palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
         MainWindow->setPalette(palette);
+        QFont font;
+        font.setPointSize(12);
+        font.setBold(true);
+        MainWindow->setFont(font);
         MainWindow->setAutoFillBackground(false);
         actionLoad = new QAction(MainWindow);
         actionLoad->setObjectName("actionLoad");
+        QFont font1;
+        font1.setBold(true);
+        actionLoad->setFont(font1);
         actionDelete = new QAction(MainWindow);
         actionDelete->setObjectName("actionDelete");
+        actionDelete->setFont(font1);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         textBrowser = new QTextBrowser(centralwidget);
         textBrowser->setObjectName("textBrowser");
-        textBrowser->setGeometry(QRect(940, 20, 321, 141));
+        textBrowser->setGeometry(QRect(940, 20, 321, 181));
         QPalette palette1;
         QBrush brush2(QColor(170, 0, 0, 255));
         brush2.setStyle(Qt::SolidPattern);
@@ -69,19 +77,20 @@ public:
         palette1.setBrush(QPalette::Inactive, QPalette::WindowText, brush2);
         palette1.setBrush(QPalette::Inactive, QPalette::Text, brush2);
         textBrowser->setPalette(palette1);
-        QFont font;
-        font.setPointSize(18);
-        textBrowser->setFont(font);
+        QFont font2;
+        font2.setPointSize(18);
+        font2.setBold(true);
+        textBrowser->setFont(font2);
         textBrowser->setFrameShadow(QFrame::Shadow::Sunken);
-        textBrowser->setLineWidth(3);
+        textBrowser->setLineWidth(1);
         textBrowser_2 = new QTextBrowser(centralwidget);
         textBrowser_2->setObjectName("textBrowser_2");
-        textBrowser_2->setGeometry(QRect(940, 320, 321, 131));
+        textBrowser_2->setGeometry(QRect(940, 310, 321, 141));
         QPalette palette2;
         palette2.setBrush(QPalette::Active, QPalette::Text, brush2);
         palette2.setBrush(QPalette::Inactive, QPalette::Text, brush2);
         textBrowser_2->setPalette(palette2);
-        textBrowser_2->setFont(font);
+        textBrowser_2->setFont(font2);
         textBrowser_4 = new QTextBrowser(centralwidget);
         textBrowser_4->setObjectName("textBrowser_4");
         textBrowser_4->setGeometry(QRect(940, 460, 321, 141));
@@ -89,11 +98,11 @@ public:
         palette3.setBrush(QPalette::Active, QPalette::Text, brush2);
         palette3.setBrush(QPalette::Inactive, QPalette::Text, brush2);
         textBrowser_4->setPalette(palette3);
-        textBrowser_4->setFont(font);
+        textBrowser_4->setFont(font2);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1300, 22));
+        menubar->setGeometry(QRect(0, 0, 1300, 26));
         menuMartial_arts_Coach = new QMenu(menubar);
         menuMartial_arts_Coach->setObjectName("menuMartial_arts_Coach");
         MainWindow->setMenuBar(menubar);
@@ -112,10 +121,10 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "<<Martial Arts Trainer>>", nullptr));
         actionLoad->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
         actionDelete->setText(QCoreApplication::translate("MainWindow", "Delete", nullptr));
-        menuMartial_arts_Coach->setTitle(QCoreApplication::translate("MainWindow", "Martial arts Coach", nullptr));
+        menuMartial_arts_Coach->setTitle(QCoreApplication::translate("MainWindow", "Menu", nullptr));
     } // retranslateUi
 
 };

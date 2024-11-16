@@ -19,6 +19,8 @@
 #include <QMediaPlayer>
 #include <QUrl>
 #include <QAudioOutput>
+#include <QResource>
+#include <QSoundEffect>
 
 
 
